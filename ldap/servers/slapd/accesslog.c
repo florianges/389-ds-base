@@ -70,6 +70,10 @@ build_base_obj(slapd_log_pblock *logpb, char *op_type)
         }
     }
 
+    if (conn && conn->c_ipaddr) {
+       json_object_object_add(json_obj, "client_ip", json_obj_add_str(conn->c_ipaddr));
+    }
+
     /* Build connection key */
     PR_snprintf(conn_key, sizeof(conn_key), "%ld-%" PRIu64,
                 logpb->conn_time, logpb->conn_id);
